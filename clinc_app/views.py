@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
 from .models import *
@@ -482,24 +482,24 @@ def delete_history(request,history_id):
   return redirect('history')
 
 
-#Patient Visits views
+#Patient Visit views
 @login_required
-def visits(request):
-  visits = Visit.objects.all().order_by('-date_visited')
-  return render(request,'visits.html',{'visits':visits})
+def visit(request):
+  visit = Visit.objects.all().order_by('-date_visited')
+  return render(request,'visit.html',{'visit':visit})
 
 #Export  table data as csv
 @login_required
-def export_visits(request):
+def export_visit(request):
   response = HttpResponse(content_type = 'text/csv')
-  response['Content-Disposition'] = 'attachment; filename = visits'+ str(datetime.datetime.now())+'.csv'
+  response['Content-Disposition'] = 'attachment; filename = visit'+ str(datetime.datetime.now())+'.csv'
 
   writer = csv.writer(response)
   writer.writerow(['First Name','Last Name','Date','Note'])
 
-  visits = Visit.objects.all()
+  visit = Visit.objects.all()
 
-  for visit in visits:
+  for visit in visit:
     writer.writerow([visit.patient.first_name,visit.patient.last_name,visit.date_visited,visit.note])
 
   return response
@@ -522,7 +522,7 @@ def add_visit(request):
     if add_visit_form.is_valid():
       visit = add_visit_form.save(commit=False)
       visit.save()
-      return redirect('visits')
+      return redirect('visit')
 
   else:
     add_visit_form = VisitForm()
@@ -538,7 +538,7 @@ def update_visit(request, visit_id):
     if update_visit_form.is_valid():
       update_visit_form.save()
       messages.success(request, f'Visit updated!')
-      return redirect('visits')
+      return redirect('visit')
   else:
     update_visit_form = VisitForm(instance=visit)
 
@@ -549,4 +549,4 @@ def delete_visit(request,visit_id):
   visit = Visit.objects.get(pk=visit_id)
   if visit:
     visit.delete_visit()
-  return redirect('visits')
+  return redirect('visit')
