@@ -23,6 +23,20 @@ def index(request):
   pending_appointments = PatientAppointment.objects.filter(approve = 'Pending').all()
   return render(request, 'index.html',{'feedback':feedback, 'all_patients':all_patients,'current_user':current_user,'approved_appointments':approved_appointments,'pending_appointments':pending_appointments})
 
+def register(request):
+  if request.method == 'POST':
+    form = Registration(request.POST)
+    if form.is_valid():
+      form.save()
+      email = form.cleaned_data['email']
+      username = form.cleaned_data.get('username')
+
+      messages.success(request,f'Account for {username} created,you can now login')
+      return redirect('login')
+  else:
+    form = Registration()
+  return render(request,'django_registration/registration_form.html',{"form":form})
+
 def login(request):
   if request.method == 'POST':
     form = AuthenticationForm(request=request, data=request.POST)
