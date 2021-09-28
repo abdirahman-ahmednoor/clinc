@@ -33,13 +33,13 @@ def login(request):
       if user is not None:
         auth_login(request, user)
         messages.info(request, f"You are now logged in as {username}")
-        return redirect('home')
+        return redirect('index')
       else:
         messages.error(request, "Invalid username or password.")
     else:
       messages.error(request, "Invalid username or password.")
   form = AuthenticationForm()
-  return render(request = request,template_name = "registration/login.html",context={"form":form})
+  return render(request = request,template_name = "django_registration/login.html",context={"form":form})
 
 
 #Patient views
