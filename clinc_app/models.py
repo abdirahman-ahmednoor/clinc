@@ -4,8 +4,8 @@ from django.db.models.deletion import CASCADE
 from cloudinary.models import CloudinaryField
 from django.db.models.fields import DateTimeField
 from django.db.models.signals import post_save
-# from django.dispatch import receiver
-# from django.utils import timezone
+from django.dispatch import receiver
+from django.utils import timezone
 
 
 # Create your models here.
