@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="head">
+        <h5 class="title">PATIENTS</h5>
+        <a class="nav-item nav-link text-center"  href="{% url 'add_visit' %}"><button class="btn btn-primary">Add visit</button></a>
+        <a class="nav-item nav-link text-center"  href="{% url 'export_visits' %}"><button class="btn btn-primary">Export Report</button></a>
+      </div>
+      <table class="table table-bordered">
+          <tr>
+            <th>First Name</th>
+            <th>Second Name</th>
+            <th>Date</th>
+            <th>Edit</th>
+            <th>View</th>
+            <th>Delete</th>
+          </tr>
+          {% if visits %}
+          {% for visit in visits %}
+          <tr>
+            <td>{{visit.patient.first_name}}</td>
+            <td>{{visit.patient.last_name}}</td>
+            <td>{{visit.date_visited|date}}</td>
+            <td><a href="{% url 'update_visit' visit.id %}" class="btn btn-primary"><i class="fas fa-pen-nib"></i> Update</a></td>
+            <td><a href="{% url 'visit_details' visit.id %}" class="btn btn-success"><i class="fas fa-eye"></i> View</a></td>
+            <td><a href="{% url 'delete_visit' visit.id %}" class="btn  btn-danger"><i class="fas fa-trash-alt"></i> Delete</a></td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+{% endblock %}
