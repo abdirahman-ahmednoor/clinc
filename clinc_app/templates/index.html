@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid home">
+  <div class="row">
+    <div class="col-md-3">
+      <a href="{% url 'appointments' %}" class="notification approved">
+        <span class="btns">Approved Appointments</span>
+        <span class="badge2">{{approved_appointments.count}}</span>
+      </a>
+     </div>
+     <div class="col-md-3">
+      <a href="{% url 'appointments' %}" class="notification">
+        <span class="btns">Pending Appointments</span>
+        <span class="badge">{{pending_appointments.count}}</span>
+      </a>
+
+     </div>
+     <div class="col-md-3">
+      <a href="{% url 'feedback' %}" class="notification feedback">
+        <span class="btns">Recent Feedbacks</span>
+        <span class="badge4">{{feedback.count}}</span>
+      </a>
+
+     </div>
+     <div class="col-md-3">
+      <a href="{% url 'patients' %}" class="notification all-patients">
+        <span class="btns">All patients</span>
+        <span class="badge3">{{all_patients.count}}</span>
+      </a>
+
+     </div>
+  </div>
+  <div class="banner">
+    <div class="container h-100">
+      <div class="d-flex justify-content-center h-100">
+        <form class="search-patient" action="{% url 'search' %}" role="search">
+        <div class="searchbar">
+          <input class="search_input" type="text" name="name" placeholder="Search patients">
+          <button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
